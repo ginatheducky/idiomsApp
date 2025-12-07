@@ -35,6 +35,60 @@ class Idioms {
             }
         }
     }
+    
+    func search(for searchTerm: String) -> [EnglishIdiom] {
+        if searchTerm.isEmpty {
+            return englishIdioms
+        } else {
+            return englishIdioms.filter {
+                idiom in
+                idiom.phrase.localizedCaseInsensitiveContains(searchTerm)
+            }
+        }
+    }
+    
+    func sort(by alphabetical: Bool) {
+        englishIdioms.sort { idiom1, idiom2 in
+            if alphabetical {
+                idiom1.phrase < idiom2.phrase
+            } else {
+                idiom1.phrase > idiom2.phrase
+            }
+        }
+    }
+    
+    
+    
+//    func search(for searchTerm: String) -> [ApexPredator] {
+//        if searchTerm.isEmpty {
+//            return apexPredators
+//        } else {
+//            return apexPredators.filter {
+//                predator in
+//                predator.name.localizedCaseInsensitiveContains(searchTerm)
+//            }
+//        }
+//    }
+    
+//    func sort(by alphabetical: Bool) {
+//        apexPredators.sort { predator1, predator2 in
+//            if alphabetical {
+//                predator1.name < predator2.name
+//            } else {
+//                predator1.id < predator2.id
+//            }
+//        }
+//    }
+//    
+//    func filter(by type: APType) {
+//        if type == .all {
+//            apexPredators = allApexPredators
+//        } else {
+//            apexPredators = allApexPredators.filter { predator in
+//                predator.type == type
+//            }
+//        }
+//    }
 }
 
 
