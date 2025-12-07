@@ -14,17 +14,16 @@ struct ContentView: View {
     // use for filtering and searching
     @State var searchText = ""
     @State var alphabetical = false
+    @State var currentDifficultySelection = DifficultyLevel.all
+    @State var currentPhraseTypeSelection = PhraseType.all
     
     var filteredIdioms: [EnglishIdiom] {
+        idioms.filterDifficultyLevel(by: currentDifficultySelection)
+        idioms.filterPhraseType(by: currentPhraseTypeSelection)
         idioms.sort(by: alphabetical)
         return idioms.search(for: searchText)
     }
-    
-//    var filteredDinos: [ApexPredator] {
-//        predators.filter(by: currentSelection)
-//        predators.sort(by: alphabetical)
-//        return predators.search(for: searchText)
-//    }
+
     
     var body: some View {
         NavigationStack {
@@ -49,6 +48,7 @@ struct ContentView: View {
             .searchable(text: $searchText)
             .autocorrectionDisabled(true)
             .toolbar {
+                // sort alphabetical functionality
                 ToolbarItem(placement: .topBarLeading) {
                     Button {
                         // sort alphabetical
@@ -62,6 +62,32 @@ struct ContentView: View {
                             Image(systemName: alphabetical ? "arrow.down" : "arrow.up")
                         }
                         .symbolEffect(.bounce, value: alphabetical)
+                    }
+                }
+                
+                // sort by phrase type
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Picker("FilterPhraseType", selection: $currentPhraseTypeSelection.animation()) {
+                            ForEach(PhraseType.allCases) { phrase in
+                                Label(phrase.rawValue.capitalized, systemImage: phrase.icon)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "book.pages")
+                    }
+                }
+                
+                // sort by difficulty
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu {
+                        Picker("FilterDifficulty", selection: $currentDifficultySelection.animation()) {
+                            ForEach(DifficultyLevel.allCases) { level in
+                                Label(level.rawValue.capitalized, systemImage: level.icon)
+                            }
+                        }
+                    } label: {
+                        Image(systemName: "line.horizontal.star.fill.line.horizontal")
                     }
                 }
             }

@@ -13,6 +13,7 @@ import Foundation // is a framework that gives us access to the decoding stuff
 class Idioms {
     // we need a place to store the data once it is decoded
     var englishIdioms: [EnglishIdiom] = []
+    var allEnglishIdioms: [EnglishIdiom] = []
     
     // the decode function should run as soon as we create an Idioms instance, for that we use init
     init() { // init runs as soon as we create an instance of our Idioms class
@@ -29,7 +30,8 @@ class Idioms {
                 let data = try Data(contentsOf: url)
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase // we need to convert from snakeCase to camelCase
-                englishIdioms = try decoder.decode([EnglishIdiom].self, from: data)
+                allEnglishIdioms = try decoder.decode([EnglishIdiom].self, from: data)
+                englishIdioms = allEnglishIdioms
             } catch {
                 print("Error decoding JSON data: \(error)")
             }
@@ -57,39 +59,23 @@ class Idioms {
         }
     }
     
+    func filterDifficultyLevel(by type: DifficultyLevel) {
+        if type == .all {
+            englishIdioms = allEnglishIdioms
+        } else {
+            englishIdioms = allEnglishIdioms.filter { idiom in
+                idiom.difficulty == type
+            }
+        }
+    }
     
-    
-//    func search(for searchTerm: String) -> [ApexPredator] {
-//        if searchTerm.isEmpty {
-//            return apexPredators
-//        } else {
-//            return apexPredators.filter {
-//                predator in
-//                predator.name.localizedCaseInsensitiveContains(searchTerm)
-//            }
-//        }
-//    }
-    
-//    func sort(by alphabetical: Bool) {
-//        apexPredators.sort { predator1, predator2 in
-//            if alphabetical {
-//                predator1.name < predator2.name
-//            } else {
-//                predator1.id < predator2.id
-//            }
-//        }
-//    }
-//    
-//    func filter(by type: APType) {
-//        if type == .all {
-//            apexPredators = allApexPredators
-//        } else {
-//            apexPredators = allApexPredators.filter { predator in
-//                predator.type == type
-//            }
-//        }
-//    }
+    func filterPhraseType(by type: PhraseType) {
+        if type == .all {
+            englishIdioms = allEnglishIdioms
+        } else {
+            englishIdioms = allEnglishIdioms.filter { idiom in
+                idiom.type == type
+            }
+        }
+    }
 }
-
-
-
