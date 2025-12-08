@@ -37,45 +37,4 @@ class Idioms {
             }
         }
     }
-    
-    func search(for searchTerm: String) -> [EnglishIdiom] {
-        if searchTerm.isEmpty {
-            return englishIdioms
-        } else {
-            return englishIdioms.filter {
-                idiom in
-                idiom.phrase.localizedCaseInsensitiveContains(searchTerm)
-            }
-        }
-    }
-    
-    func sort(by alphabetical: Bool) {
-        englishIdioms.sort { idiom1, idiom2 in
-            if alphabetical {
-                idiom1.phrase < idiom2.phrase
-            } else {
-                idiom1.phrase > idiom2.phrase
-            }
-        }
-    }
-    
-    func filterDifficultyLevel(by type: DifficultyLevel) {
-        if type == .all {
-            englishIdioms = allEnglishIdioms
-        } else {
-            englishIdioms = allEnglishIdioms.filter { idiom in
-                idiom.difficulty == type
-            }
-        }
-    }
-    
-    func filterPhraseType(by type: PhraseType) {
-        if type == .all {
-            englishIdioms = allEnglishIdioms
-        } else {
-            englishIdioms = allEnglishIdioms.filter { idiom in
-                idiom.type == type
-            }
-        }
-    }
 }

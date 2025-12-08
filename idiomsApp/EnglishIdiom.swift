@@ -67,7 +67,7 @@ enum PhraseType: String, Decodable, CaseIterable, Identifiable {
         case .slang:
             "text.bubble.fill"
         case .all:
-            ""
+            "circle"
         }
     }
     

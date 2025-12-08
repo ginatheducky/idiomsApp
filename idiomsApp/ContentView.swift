@@ -18,10 +18,33 @@ struct ContentView: View {
     @State var currentPhraseTypeSelection = PhraseType.all
     
     var filteredIdioms: [EnglishIdiom] {
-        idioms.filterDifficultyLevel(by: currentDifficultySelection)
-        idioms.filterPhraseType(by: currentPhraseTypeSelection)
-        idioms.sort(by: alphabetical)
-        return idioms.search(for: searchText)
+        var result = idioms.allEnglishIdioms
+        
+        // filter by difficulty
+        if currentDifficultySelection != .all {
+            result = result.filter { $0.difficulty == currentDifficultySelection }
+        }
+        
+        // filter by phrase type
+        if currentPhraseTypeSelection != .all {
+            result = result.filter { $0.type == currentPhraseTypeSelection }
+        }
+        
+        // search
+        if !searchText.isEmpty {
+            result = result.filter {
+                $0.phrase.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+        
+        // sort
+        result.sort { a, b in
+            alphabetical
+            ? a.phrase < b.phrase   // A → Z
+            : a.phrase > b.phrase   // Z → A
+        }
+        
+        return result
     }
 
     
