@@ -29,19 +29,24 @@ struct ContentView: View {
         NavigationStack {
             // List is also a special view, that comes with scrolling and loading but the data has to follow the Identifiable protocol
             List(filteredIdioms) { idiom in
-                HStack {
-                    // phrase
-                    Text(idiom.phrase)
-                    
-                    // have a spacer, to push the difficulty level to the far right side
-                    Spacer()
-                    
-                    // phrase type
-                    Image(systemName: idiom.type.icon)
-                        .foregroundStyle(idiom.type.color)
-                    
-                    // difficulty
-                    Image(systemName: idiom.difficulty.icon)
+                NavigationLink {
+                    // go to the IdiomView view
+                    IdiomView(idiom: idiom)
+                } label: {
+                    HStack {
+                        // phrase
+                        Text(idiom.phrase)
+                        
+                        // have a spacer, to push the difficulty level to the far right side
+                        Spacer()
+                        
+                        // phrase type
+                        Image(systemName: idiom.type.icon)
+                            .foregroundStyle(idiom.type.color)
+                        
+                        // difficulty
+                        Image(systemName: idiom.difficulty.icon)
+                    }
                 }
             }
             .navigationTitle(Text("Idioms, Slangs and Colloquialisms"))
