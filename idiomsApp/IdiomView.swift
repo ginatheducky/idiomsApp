@@ -22,12 +22,16 @@ struct IdiomView: View {
                     VStack {
                         // phrase text
                         HStack {
-                            Image(systemName: "quote.opening")
-                                .padding(.bottom, 10)
                             Text(idiom.phrase)
                                 .font(.title)
-                            Image(systemName: "quote.closing")
-                                .padding(.bottom, 10)
+                                .multilineTextAlignment(.center)
+                                .padding(.horizontal, 25)
+                                .overlay(alignment: .topLeading) {
+                                    Image(systemName: "quote.opening")
+                                }
+                                .overlay(alignment: .bottomTrailing) {
+                                    Image(systemName: "quote.closing")
+                                }
                         }
                         .padding(.bottom, 20)
                         
@@ -110,6 +114,6 @@ struct IdiomView: View {
 }
 
 #Preview {
-    let idiom = Idioms().allEnglishIdioms[0]
+    let idiom = Idioms().allEnglishIdioms[44]
     IdiomView(idiom: idiom)
 }

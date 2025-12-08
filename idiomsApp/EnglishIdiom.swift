@@ -43,7 +43,7 @@ enum DifficultyLevel: String, Decodable, CaseIterable, Identifiable {
         case .advanced:
             "star.fill"
         case .all:
-            ""
+            "circle"
         }
     }
 }
